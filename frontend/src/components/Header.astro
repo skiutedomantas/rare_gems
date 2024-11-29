@@ -1,0 +1,62 @@
+---
+const navLinks = [
+  { name: "About", href: "#about" },
+  { name: "Collection", href: "#collection" },
+];
+---
+
+<header>
+  <div class="container">
+    <h1>Rare Gems</h1>
+    <img src="/diamond.png" alt="diamond" />
+    <nav>
+      <ul>
+        {
+          navLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  img {
+    height: 64px;
+  }
+
+  header {
+    background-color: var(--color-floral-white);
+    color: var(--color-text-black);
+    padding: 1rem 5rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav a {
+    font-size: var(--font-size-l);
+    color: var(--color-text-black);
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    text-decoration: underline;
+  }
+</style>

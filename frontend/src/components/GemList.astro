@@ -1,0 +1,16 @@
+---
+import GemCard from "./GemCard.astro";
+const res = await fetch("http://localhost:1337/api/rare-gems?populate=*");
+const gemsResponse = await res.json();
+const gems = gemsResponse.data;
+---
+
+<ul>
+  {
+    gems.map((gem) => (
+      <li>
+        <GemCard gem={gem} />
+      </li>
+    ))
+  }
+</ul>

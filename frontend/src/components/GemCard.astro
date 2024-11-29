@@ -1,0 +1,13 @@
+---
+const { gem } = Astro.props;
+console.log(gem.GemImage.url);
+---
+
+<div>
+  <h3>{gem.GemName}</h3>
+  <p>{gem.colors.map((color) => color.Color).join(", ")}</p>
+  <p>{gem.GemLocation}</p>
+  <p>{gem.GemHardness}</p>
+  <p>{gem.GemValue}</p>
+  <img src={`http://localhost:1337${gem.GemImage.url}`} alt="" />
+</div>

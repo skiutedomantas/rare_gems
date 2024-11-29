@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rare_gems",
+  "info": {
+    "singularName": "rare-gem",
+    "pluralName": "rare-gems",
+    "displayName": "Rare Gem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "GemName": {
+      "type": "string"
+    },
+    "GemLocation": {
+      "type": "string"
+    },
+    "GemValue": {
+      "type": "string"
+    },
+    "colors": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::color.color",
+      "inversedBy": "rare_gems"
+    },
+    "GemHardness": {
+      "type": "string"
+    },
+    "GemImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

@@ -414,6 +414,7 @@ export interface ApiRareGemRareGem extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    GemDescription: Schema.Attribute.Text;
     GemHardness: Schema.Attribute.String;
     GemImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     GemLocation: Schema.Attribute.String;

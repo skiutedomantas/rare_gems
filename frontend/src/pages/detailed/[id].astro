@@ -1,4 +1,8 @@
 ---
+import Header from "../../components/Header.astro";
+import "../../styles/global.css";
+import "../../styles/reset.css";
+
 export async function getStaticPaths() {
   const response = await fetch(
     "http://localhost:1337/api/rare-gems?populate=*"
@@ -17,6 +21,110 @@ const response = await fetch(
 const gemResults = await response.json();
 
 const gem = gemResults.data[0];
+const currentId = parseInt(id);
+const minId = 38;
+const maxId = 52;
 ---
 
-<h1>{gem.GemName}</h1>
+<style>
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: var(--color-champagne);
+    padding: 5rem;
+  }
+
+  img {
+    width: 500px;
+    border-radius: 20px;
+  }
+
+  .description {
+    margin-top: 1rem;
+    width: 550px;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
+  .info-container {
+    margin-left: 2rem;
+  }
+
+  p {
+    font-size: var(--font-size-l);
+    margin-top: 2rem;
+  }
+
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+  }
+
+  .navigation-buttons button {
+    padding: 1rem 1.5rem;
+    font-size: var(--font-size-m);
+    background-color: var(--color-champagne);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .navigation-buttons button:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+  }
+</style>
+
+<Header />
+<div class="container">
+  <div class="img-container">
+    <img src={`http://localhost:1337${gem.GemImage.url}`} alt="" />
+  </div>
+  <div class="info-container">
+    <h3>{gem.GemName}</h3>
+    <p class="description">{gem.GemDescription}</p>
+    <p>Value: {gem.GemValue}</p>
+    <p>Colors: {gem.colors.map((color) => color.Color).join(", ")}</p>
+    <p>Location: {gem.GemLocation}</p>
+    <p>Hardness: {gem.GemHardness}</p>
+  </div>
+</div>
+
+<div
+  class="navigation-buttons"
+  data-current-id={currentId}
+  data-min-id={minId}
+  data-max-id={maxId}
+>
+  <button id="previous-button" disabled={currentId <= minId}>Previous</button>
+  <button id="next-button" disabled={currentId >= maxId}>Next</button>
+</div>
+
+<script>
+  const navContainer = document.querySelector(".navigation-buttons");
+  const prevButton = document.getElementById("previous-button");
+  const nextButton = document.getElementById("next-button");
+
+  console.log(navContainer.dataset);
+
+  const currentId = parseInt(navContainer.dataset.currentId);
+  const minId = parseInt(navContainer.dataset.minId);
+  const maxId = parseInt(navContainer.dataset.maxId);
+
+  prevButton.addEventListener("click", () => {
+    if (currentId > minId) {
+      window.location.href = `/detailed/${currentId - 1}`;
+    }
+  });
+
+  nextButton.addEventListener("click", () => {
+    if (currentId < maxId) {
+      window.location.href = `/detailed/${currentId + 1}`;
+    }
+  });
+</script>

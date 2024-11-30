@@ -4,11 +4,20 @@ import GemCard from "./GemCard.astro";
 const res = await fetch("http://localhost:1337/api/rare-gems?populate=*");
 const gemsResponse = await res.json();
 const gems = gemsResponse.data;
+
+const uniqueColors = [
+  ...new Set(gems.flatMap((gem) => gem.colors.map((c) => c.Color))),
+];
 ---
 
 <style>
   .wrapper {
     background-color: var(--color-floral-white);
+  }
+
+  .filter-container {
+    margin: 2rem;
+    text-align: center;
   }
 
   .gem-grid {
@@ -42,20 +51,38 @@ const gems = gemsResponse.data;
   <div class="filter-container">
     <select id="filter-dropdown">
       <option value="all">All Colors</option>
-      <option value="Red">Red</option>
-      <option value="Blue">Blue</option>
-      <option value="Green">Green</option>
-      <option value="Yellow">Yellow</option>
+      {uniqueColors.map((color) => <option value={color}>{color}</option>)}
     </select>
   </div>
 
   <ul id="collection" class="gem-grid">
     {
       gems.map((gem) => (
-        <li>
+        <li
+          class="gem-card"
+          data-colors={gem.colors.map((color) => color.Color).join(",")}
+        >
           <GemCard gem={gem} />
         </li>
       ))
     }
   </ul>
 </div>
+
+<script>
+  document
+    .querySelector("#filter-dropdown")
+    .addEventListener("change", (event) => {
+      const selectedColor = event.target.value.toLowerCase();
+      const cards = document.querySelectorAll(".gem-card");
+
+      cards.forEach((card) => {
+        const gemColors = card.dataset.colors.toLowerCase().split(",");
+        if (selectedColor === "all" || gemColors.includes(selectedColor)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+</script>

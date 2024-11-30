@@ -1,0 +1,22 @@
+---
+export async function getStaticPaths() {
+  const response = await fetch(
+    "http://localhost:1337/api/rare-gems?populate=*"
+  );
+  const gems = await response.json();
+
+  return gems.data.map((gem) => ({
+    params: { id: gem.id.toString() },
+  }));
+}
+
+const { id } = Astro.params;
+const response = await fetch(
+  `http://localhost:1337/api/rare-gems?filters[id][$eq]=${id}&populate=*`
+);
+const gemResults = await response.json();
+
+const gem = gemResults.data[0];
+---
+
+<h1>{gem.GemName}</h1>

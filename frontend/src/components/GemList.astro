@@ -1,16 +1,61 @@
 ---
 import GemCard from "./GemCard.astro";
+
 const res = await fetch("http://localhost:1337/api/rare-gems?populate=*");
 const gemsResponse = await res.json();
 const gems = gemsResponse.data;
 ---
 
-<ul>
-  {
-    gems.map((gem) => (
-      <li>
-        <GemCard gem={gem} />
-      </li>
-    ))
+<style>
+  .wrapper {
+    background-color: var(--color-floral-white);
   }
-</ul>
+
+  .gem-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 5rem;
+    list-style: none;
+  }
+
+  .gem-grid li {
+    cursor: pointer;
+  }
+
+  .gem-grid li:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 600;
+    margin-top: 5rem;
+    margin-bottom: -1.5rem;
+  }
+</style>
+
+<h3>Gem Collection</h3>
+<div class="wrapper">
+  <div class="filter-container">
+    <select id="filter-dropdown">
+      <option value="all">All Colors</option>
+      <option value="Red">Red</option>
+      <option value="Blue">Blue</option>
+      <option value="Green">Green</option>
+      <option value="Yellow">Yellow</option>
+    </select>
+  </div>
+
+  <ul id="collection" class="gem-grid">
+    {
+      gems.map((gem) => (
+        <li>
+          <GemCard gem={gem} />
+        </li>
+      ))
+    }
+  </ul>
+</div>

@@ -1,13 +1,44 @@
 ---
 const { gem } = Astro.props;
-console.log(gem.GemImage.url);
 ---
 
+<style>
+  .img-container {
+    display: flex;
+    align-items: center;
+  }
+  img {
+    width: 250px;
+    border-radius: 10px;
+    margin-bottom: 0.6rem;
+  }
+
+  h3 {
+    font-size: var(--font-size-xl);
+    margin-left: 1.3rem;
+  }
+  p {
+    margin-top: 0.7rem;
+    margin-left: 1.3rem;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--color-champagne);
+    padding: 1rem;
+    border-radius: 12px;
+  }
+</style>
+
 <div>
+  <div class="img-container">
+    <img src={`http://localhost:1337${gem.GemImage.url}`} alt="" />
+  </div>
   <h3>{gem.GemName}</h3>
-  <p>{gem.colors.map((color) => color.Color).join(", ")}</p>
-  <p>{gem.GemLocation}</p>
-  <p>{gem.GemHardness}</p>
-  <p>{gem.GemValue}</p>
-  <img src={`http://localhost:1337${gem.GemImage.url}`} alt="" />
+  <p>Colors: {gem.colors.map((color) => color.Color).join(", ")}</p>
+  <p>Location: {gem.GemLocation}</p>
+  <p>Hardness: {gem.GemHardness}</p>
+  <p>Value: {gem.GemValue}</p>
 </div>

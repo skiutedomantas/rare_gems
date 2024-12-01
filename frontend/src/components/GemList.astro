@@ -15,9 +15,19 @@ const uniqueColors = [
     background-color: var(--color-floral-white);
   }
 
-  .filter-container {
+  .view-toggle {
     margin: 2rem;
     text-align: center;
+  }
+
+  .view-toggle button {
+    background-color: var(--color-champagne);
+    border: none;
+    border-radius: 5px;
+    font-size: var(--font-size-m);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin: 1.5rem 0.6rem;
   }
 
   .gem-grid {
@@ -37,6 +47,24 @@ const uniqueColors = [
     transition: transform 0.3s;
   }
 
+  .gem-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 2rem;
+    padding: 2rem;
+    list-style: none;
+  }
+
+  .gem-carousel li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    background-color: var(--color-champagne);
+    border-radius: 8px;
+    width: 250px;
+    padding: 1rem;
+  }
+
   h3 {
     text-align: center;
     font-size: 3rem;
@@ -44,10 +72,28 @@ const uniqueColors = [
     margin-top: 5rem;
     margin-bottom: -1.5rem;
   }
+
+  .filter-container {
+    text-align: center;
+    margin-top: -1rem;
+  }
+
+  #filter-dropdown {
+    font-size: var(--font-size-m);
+    background-color: var(--color-champagne);
+    border: none;
+    padding: 0.5rem 0.3rem;
+    border-radius: 5px;
+  }
 </style>
 
 <h3>Gem Collection</h3>
 <div class="wrapper">
+  <div class="view-toggle">
+    <button id="grid-view-btn">Grid View</button>
+    <button id="carousel-view-btn">Carousel View</button>
+  </div>
+
   <div class="filter-container">
     <select id="filter-dropdown">
       <option value="all">All Colors</option>
@@ -70,19 +116,35 @@ const uniqueColors = [
 </div>
 
 <script>
-  document
-    .querySelector("#filter-dropdown")
-    .addEventListener("change", (event) => {
-      const selectedColor = event.target.value.toLowerCase();
-      const cards = document.querySelectorAll(".gem-card");
+  document.addEventListener("DOMContentLoaded", () => {
+    const gridViewBtn = document.getElementById("grid-view-btn");
+    const carouselViewBtn = document.getElementById("carousel-view-btn");
+    const collection = document.getElementById("collection");
 
-      cards.forEach((card) => {
-        const gemColors = card.dataset.colors.toLowerCase().split(",");
-        if (selectedColor === "all" || gemColors.includes(selectedColor)) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
-      });
+    gridViewBtn.addEventListener("click", () => {
+      collection.classList.remove("gem-carousel");
+      collection.classList.add("gem-grid");
     });
+
+    carouselViewBtn.addEventListener("click", () => {
+      collection.classList.remove("gem-grid");
+      collection.classList.add("gem-carousel");
+    });
+
+    document
+      .querySelector("#filter-dropdown")
+      .addEventListener("change", (event) => {
+        const selectedColor = event.target.value.toLowerCase();
+        const cards = document.querySelectorAll(".gem-card");
+
+        cards.forEach((card) => {
+          const gemColors = card.dataset.colors.toLowerCase().split(",");
+          if (selectedColor === "all" || gemColors.includes(selectedColor)) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+  });
 </script>

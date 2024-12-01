@@ -23,6 +23,10 @@ const { gem } = Astro.props;
     margin-left: 1.3rem;
   }
 
+  p {
+    font-size: var(--font-size-m);
+  }
+
   div {
     display: flex;
     flex-direction: column;
@@ -38,9 +42,6 @@ const { gem } = Astro.props;
     <img src={`http://localhost:1337${gem.GemImage.url}`} alt="" />
   </div>
   <h3>{gem.GemName}</h3>
-  <p>Colors: {gem.colors.map((color) => color.Color).join(", ")}</p>
-  <p>Location: {gem.GemLocation}</p>
-  <p>Hardness: {gem.GemHardness}</p>
-  <p>Value: {gem.GemValue}</p>
+  <p>{gem.GemValue}</p>
   <a href={`/detailed/${gem.id}`}>Learn more</a>
 </div>

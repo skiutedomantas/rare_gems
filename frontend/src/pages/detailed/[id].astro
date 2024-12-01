@@ -1,5 +1,5 @@
 ---
-import Header from "../../components/Header.astro";
+import Base from "../../layouts/Base.astro";
 import "../../styles/global.css";
 import "../../styles/reset.css";
 
@@ -62,7 +62,7 @@ const maxId = 67;
   .navigation-buttons {
     display: flex;
     justify-content: space-around;
-    margin-top: 2rem;
+    margin: 2rem;
   }
 
   .navigation-buttons button {
@@ -80,30 +80,31 @@ const maxId = 67;
   }
 </style>
 
-<Header />
-<div class="container">
-  <div class="img-container">
-    <img src={`http://localhost:1337${gem.GemImage.url}`} alt="" />
+<Base>
+  <div class="container">
+    <div class="img-container">
+      <img src={`http://localhost:1337${gem.GemImage.url}`} alt="" />
+    </div>
+    <div class="info-container">
+      <h3>{gem.GemName}</h3>
+      <p class="description">{gem.GemDescription}</p>
+      <p>Value: {gem.GemValue}</p>
+      <p>Colors: {gem.colors.map((color) => color.Color).join(", ")}</p>
+      <p>Location: {gem.GemLocation}</p>
+      <p>Hardness: {gem.GemHardness}</p>
+    </div>
   </div>
-  <div class="info-container">
-    <h3>{gem.GemName}</h3>
-    <p class="description">{gem.GemDescription}</p>
-    <p>Value: {gem.GemValue}</p>
-    <p>Colors: {gem.colors.map((color) => color.Color).join(", ")}</p>
-    <p>Location: {gem.GemLocation}</p>
-    <p>Hardness: {gem.GemHardness}</p>
-  </div>
-</div>
 
-<div
-  class="navigation-buttons"
-  data-current-id={currentId}
-  data-min-id={minId}
-  data-max-id={maxId}
->
-  <button id="previous-button" disabled={currentId <= minId}>Previous</button>
-  <button id="next-button" disabled={currentId >= maxId}>Next</button>
-</div>
+  <div
+    class="navigation-buttons"
+    data-current-id={currentId}
+    data-min-id={minId}
+    data-max-id={maxId}
+  >
+    <button id="previous-button" disabled={currentId <= minId}>Previous</button>
+    <button id="next-button" disabled={currentId >= maxId}>Next</button>
+  </div>
+</Base>
 
 <script>
   const navContainer = document.querySelector(".navigation-buttons");

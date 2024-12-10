@@ -2,28 +2,35 @@
 import Base from "../../layouts/Base.astro";
 import "../../styles/global.css";
 import "../../styles/reset.css";
+import fetchApi from "../../lib/strapi.js";
 
 export async function getStaticPaths() {
-  const response = await fetch(
-    "http://localhost:1337/api/rare-gems?populate=*"
-  );
-  const gems = await response.json();
+  const gems = await fetchApi({
+    endpoint: "rare-gems",
+    query: { populate: "*" },
+    wrappedByKey: "data",
+  });
 
-  return gems.data.map((gem) => ({
+  return gems.map((gem) => ({
     params: { id: gem.id.toString() },
   }));
 }
 
 const { id } = Astro.params;
-const response = await fetch(
-  `http://localhost:1337/api/rare-gems?filters[id][$eq]=${id}&populate=*`
-);
-const gemResults = await response.json();
+const gemResults = await fetchApi({
+  endpoint: "rare-gems",
+  query: {
+    filters: { id: { $eq: id } },
+    populate: "*",
+  },
+  wrappedByKey: "data",
+  wrappedByList: true,
+});
 
-const gem = gemResults.data[0];
+const gem = gemResults;
 const currentId = parseInt(id);
-const minId = 53;
-const maxId = 67;
+const minId = 85;
+const maxId = 99;
 ---
 
 <style>
@@ -90,7 +97,9 @@ const maxId = 67;
       <p class="description">{gem.GemDescription}</p>
       <p>Value: {gem.GemValue}</p>
       <p>Colors: {gem.colors.map((color) => color.Color).join(", ")}</p>
-      <p>Location: {gem.GemLocation}</p>
+      <p>
+        Location: {gem.countries.map((country) => country.Country).join(",")}
+      </p>
       <p>Hardness: {gem.GemHardness}</p>
     </div>
   </div>
@@ -110,8 +119,6 @@ const maxId = 67;
   const navContainer = document.querySelector(".navigation-buttons");
   const prevButton = document.getElementById("previous-button");
   const nextButton = document.getElementById("next-button");
-
-  console.log(navContainer.dataset);
 
   const currentId = parseInt(navContainer.dataset.currentId);
   const minId = parseInt(navContainer.dataset.minId);

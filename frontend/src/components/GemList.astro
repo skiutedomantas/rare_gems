@@ -1,9 +1,15 @@
 ---
 import GemCard from "./GemCard.astro";
+import fetchApi from "../lib/strapi"; // Import your custom fetchApi function
 
-const res = await fetch("http://localhost:1337/api/rare-gems?populate=*");
-const gemsResponse = await res.json();
-const gems = gemsResponse.data;
+const gems = await fetchApi(
+  {
+    endpoint: "rare-gems",
+    query: { populate: "*" },
+    wrappedByKey: "data",
+  },
+  {}
+);
 
 const uniqueColors = [
   ...new Set(gems.flatMap((gem) => gem.colors.map((c) => c.Color))),

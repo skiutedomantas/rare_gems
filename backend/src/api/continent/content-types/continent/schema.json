@@ -12,14 +12,14 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "Continent": {
+      "type": "string"
+    },
     "rare_gems": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::rare-gem.rare-gem",
       "inversedBy": "continents"
-    },
-    "Continent": {
-      "type": "string"
     }
   }
 }

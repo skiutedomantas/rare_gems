@@ -487,7 +487,6 @@ export interface ApiRareGemRareGem extends Struct.CollectionTypeSchema {
     GemDescription: Schema.Attribute.Text;
     GemHardness: Schema.Attribute.String;
     GemImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    GemLocation: Schema.Attribute.String;
     GemName: Schema.Attribute.String;
     GemValue: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;

@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "continents",
+  "info": {
+    "singularName": "continent",
+    "pluralName": "continents",
+    "displayName": "Continent",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "rare_gems": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::rare-gem.rare-gem",
+      "inversedBy": "continents"
+    },
+    "Continent": {
+      "type": "string"
+    }
+  }
+}

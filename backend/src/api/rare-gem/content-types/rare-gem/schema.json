@@ -43,6 +43,18 @@
     },
     "GemDescription": {
       "type": "text"
+    },
+    "continents": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::continent.continent",
+      "mappedBy": "rare_gems"
+    },
+    "countries": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::country.country",
+      "mappedBy": "rare_gems"
     }
   }
 }

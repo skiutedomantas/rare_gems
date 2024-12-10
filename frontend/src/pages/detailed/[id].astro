@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import GemCard from "../../components/GemCard.astro";
 import "../../styles/global.css";
 import "../../styles/reset.css";
 import fetchApi from "../../lib/strapi.js";
@@ -16,24 +17,46 @@ export async function getStaticPaths() {
   }));
 }
 
-const { id } = Astro.params;
-const gemResults = await fetchApi({
+const gems = await fetchApi({
   endpoint: "rare-gems",
-  query: {
-    filters: { id: { $eq: id } },
-    populate: "*",
-  },
+  query: { populate: "*" },
   wrappedByKey: "data",
-  wrappedByList: true,
 });
 
-const gem = gemResults;
+const { id } = Astro.params;
+const gem = gems.find((gem) => gem.id.toString() === id);
+
 const currentId = parseInt(id);
 const minId = 85;
 const maxId = 99;
+
+const currentGemContinents = gem.continents.map(
+  (continent) => continent.Continent
+);
+
+const relatedGems = gems.filter(
+  (otherGem) =>
+    otherGem.id !== gem.id &&
+    otherGem.continents.some((continent) =>
+      currentGemContinents.includes(continent.Continent)
+    )
+);
+
+const displayedRelatedGems = relatedGems.slice(0, 4);
 ---
 
 <style>
+  .related-content {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
   .container {
     display: flex;
     flex-direction: row;
@@ -63,7 +86,7 @@ const maxId = 99;
 
   p {
     font-size: var(--font-size-l);
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 
   .navigation-buttons {
@@ -85,6 +108,13 @@ const maxId = 99;
     background-color: lightgray;
     cursor: not-allowed;
   }
+
+  .related-gems {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-around;
+  }
 </style>
 
 <Base>
@@ -98,9 +128,21 @@ const maxId = 99;
       <p>Value: {gem.GemValue}</p>
       <p>Colors: {gem.colors.map((color) => color.Color).join(", ")}</p>
       <p>
-        Location: {gem.countries.map((country) => country.Country).join(",")}
+        Continent: {
+          gem.continents.map((continent) => continent.Continent).join(",")
+        }
+      </p>
+      <p>
+        Countries: {gem.countries.map((country) => country.Country).join(",")}
       </p>
       <p>Hardness: {gem.GemHardness}</p>
+    </div>
+  </div>
+
+  <div class="related-content">
+    <h1>Related Gems from the Same Continent</h1>
+    <div class="related-gems">
+      {displayedRelatedGems.map((relatedGem) => <GemCard gem={relatedGem} />)}
     </div>
   </div>
 

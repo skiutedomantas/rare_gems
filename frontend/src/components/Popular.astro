@@ -1,5 +1,6 @@
 ---
 import fetchApi from "../lib/strapi.js";
+import { Image } from "astro:assets";
 
 const gems = await fetchApi({
   endpoint: "rare-gems",
@@ -37,8 +38,6 @@ const firstFiveGems = gems.slice(0, 5);
   }
 
   .gem-image {
-    width: 100px;
-    height: 100px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 0.5rem;
@@ -66,10 +65,12 @@ const firstFiveGems = gems.slice(0, 5);
     {
       firstFiveGems.map((gem) => (
         <div class="gem-item">
-          <img
+          <Image
             class="gem-image"
             src={`http://localhost:1337${gem.GemImage.url}`}
             alt={`${gem.GemName} image`}
+            width={100}
+            height={100}
           />
           <div class="gem-name">{gem.GemName}</div>
         </div>

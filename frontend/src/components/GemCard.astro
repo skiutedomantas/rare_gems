@@ -1,5 +1,6 @@
 ---
 const { gem } = Astro.props;
+import { Image } from "astro:assets";
 ---
 
 <style>
@@ -7,8 +8,7 @@ const { gem } = Astro.props;
     display: flex;
     align-items: center;
   }
-  img {
-    width: 250px;
+  .img {
     border-radius: 10px;
     margin-bottom: 0.6rem;
   }
@@ -39,7 +39,13 @@ const { gem } = Astro.props;
 
 <div>
   <div class="img-container">
-    <img src={`http://localhost:1337${gem.GemImage.url}`} alt="" />
+    <Image
+      class="img"
+      src={`http://localhost:1337${gem.GemImage.url}`}
+      width={250}
+      height={250}
+      alt={gem.GemName}
+    />
   </div>
   <h3>{gem.GemName}</h3>
   <p>{gem.GemValue}</p>

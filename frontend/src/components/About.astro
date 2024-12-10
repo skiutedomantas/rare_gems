@@ -1,25 +1,10 @@
-<section id="about">
-  <div class="about-section">
-    <h2>About the Collection</h2>
-    <p>
-      This collection showcases a carefully curated selection of unique and
-      valuable items, each with its own story and significance. From rare
-      artifacts to timeless pieces, every item in our collection has been chosen
-      for its quality, craftsmanship, and historical importance. Whether you're
-      a seasoned collector or someone with a growing interest, our collection
-      offers something for everyone. We aim to not only preserve these treasures
-      but also share their rich history and cultural relevance with you. Explore
-      the diverse themes, learn about the artistry behind each piece, and
-      discover the beauty of the past, preserved for the future.
-    </p>
-  </div>
-  <div class="image-container">
-    <img src="/gembox.png" alt="" />
-  </div>
-</section>
+---
+import { Image } from "astro:assets";
+import gembox from "../../public/gembox.png";
+---
 
 <style>
-  img {
+  .gembox-image {
     height: 400px;
   }
 
@@ -60,3 +45,23 @@
     width: 400px;
   }
 </style>
+
+<section id="about">
+  <div class="about-section">
+    <h2>About the Collection</h2>
+    <p>
+      This collection showcases a carefully curated selection of unique and
+      valuable items, each with its own story and significance. From rare
+      artifacts to timeless pieces, every item in our collection has been chosen
+      for its quality, craftsmanship, and historical importance. Whether you're
+      a seasoned collector or someone with a growing interest, our collection
+      offers something for everyone. We aim to not only preserve these treasures
+      but also share their rich history and cultural relevance with you. Explore
+      the diverse themes, learn about the artistry behind each piece, and
+      discover the beauty of the past, preserved for the future.
+    </p>
+  </div>
+  <div class="image-container">
+    <Image src={gembox} alt="Gem box" class="gembox-image" />
+  </div>
+</section>

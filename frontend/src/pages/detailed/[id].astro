@@ -4,6 +4,7 @@ import GemCard from "../../components/GemCard.astro";
 import "../../styles/global.css";
 import "../../styles/reset.css";
 import fetchApi from "../../lib/strapi.js";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const gems = await fetchApi({
@@ -65,8 +66,7 @@ const displayedRelatedGems = relatedGems.slice(0, 4);
     padding: 5rem;
   }
 
-  img {
-    width: 500px;
+  .img {
     border-radius: 20px;
   }
 
@@ -120,7 +120,13 @@ const displayedRelatedGems = relatedGems.slice(0, 4);
 <Base>
   <div class="container">
     <div class="img-container">
-      <img src={`http://localhost:1337${gem.GemImage.url}`} alt="" />
+      <Image
+        class="img"
+        src={`http://localhost:1337${gem.GemImage.url}`}
+        width={500}
+        height={500}
+        alt={gem.GemName}
+      />
     </div>
     <div class="info-container">
       <h3>{gem.GemName}</h3>

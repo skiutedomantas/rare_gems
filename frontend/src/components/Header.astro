@@ -3,30 +3,14 @@ const navLinks = [
   { name: "About", href: "/#about" },
   { name: "Collection", href: "/#collection" },
 ];
+import { Image } from "astro:assets";
+import diamond from "../../public/diamond.png";
 ---
 
-<header>
-  <div class="container">
-    <h1>Rare Gems</h1>
-    <a href="/"><img src="/diamond.png" alt="diamond" /> </a>
-
-    <nav>
-      <ul>
-        {
-          navLinks.map((link) => (
-            <li>
-              <a href={link.href}>{link.name}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-  </div>
-</header>
-
 <style>
-  img {
+  .diamond-image {
     height: 64px;
+    width: auto;
   }
 
   header {
@@ -62,3 +46,22 @@ const navLinks = [
     text-decoration: underline;
   }
 </style>
+
+<header>
+  <div class="container">
+    <h1>Rare Gems</h1>
+    <a href="/"><Image src={diamond} alt="diamond" class="diamond-image" /> </a>
+
+    <nav>
+      <ul>
+        {
+          navLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

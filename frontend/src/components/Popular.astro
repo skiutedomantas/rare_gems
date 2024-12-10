@@ -1,0 +1,80 @@
+---
+import fetchApi from "../lib/strapi.js";
+
+const gems = await fetchApi({
+  endpoint: "rare-gems",
+  query: { populate: "*" },
+  wrappedByKey: "data",
+});
+
+const firstFiveGems = gems.slice(0, 5);
+---
+
+<style>
+  .container {
+    margin: 2rem 5rem;
+    background-color: var(--color-champagne);
+    width: 900px;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+  .popular-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .gem-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+    font-size: var(--font-size-m);
+  }
+
+  .gem-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-weight: bold;
+    font-size: var(--font-size-xl);
+    margin-left: 2rem;
+    margin-top: 1rem;
+  }
+
+  a {
+    margin-left: 2rem;
+    margin-top: 2rem;
+  }
+
+  .gem-name {
+    margin-top: 0.5rem;
+  }
+</style>
+<div class="container">
+  <h2>Popular Gems</h2>
+  <div class="popular-container">
+    {
+      firstFiveGems.map((gem) => (
+        <div class="gem-item">
+          <img
+            class="gem-image"
+            src={`http://localhost:1337${gem.GemImage.url}`}
+            alt={`${gem.GemName} image`}
+          />
+          <div class="gem-name">{gem.GemName}</div>
+        </div>
+      ))
+    }
+  </div>
+  <a href="/collection">Check out the collection</a>
+</div>

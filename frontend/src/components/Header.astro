@@ -50,7 +50,14 @@ import diamond from "../../public/diamond.png";
 <header>
   <div class="container">
     <h1>Rare Gems</h1>
-    <a href="/"><Image src={diamond} alt="diamond" class="diamond-image" /> </a>
+    <a href="/"
+      ><Image
+        src={diamond}
+        alt="diamond"
+        class="diamond-image"
+        sizes="(min-width: 600px) 64px, (min-width: 460px) calc(23.33vw - 71px), calc(100vw - 419px)"
+      />
+    </a>
 
     <nav>
       <ul>

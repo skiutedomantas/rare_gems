@@ -62,6 +62,12 @@ import gembox from "../../public/gembox.png";
     </p>
   </div>
   <div class="image-container">
-    <Image src={gembox} alt="Gem box" class="gembox-image" />
+    <Image
+      src={gembox}
+      sizes="(min-width: 960px) 400px"
+      widths={[400, 800, 1020, 1200]}
+      alt="Gem box"
+      class="gembox-image"
+    />
   </div>
 </section>
